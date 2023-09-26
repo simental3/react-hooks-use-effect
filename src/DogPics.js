@@ -5,23 +5,26 @@ import React, { useState, useEffect } from "react";
 function DogPics() {
   const [images, setImages] = useState([]);
 
+  const imageItems = images.map((image) => (
+    <img key={image} src={image} />
+  ))
+
   useEffect(() => {
     console.log("useEffect");
     fetch("https://dog.ceo/api/breeds/image/random/3")
       .then((r) => r.json())
       .then((data) => {
         console.log("setState");
+        // setting state in the useEffect callback
         setImages(data.message);
       });
-  });
+  }, []);
 
   console.log("render");
 
   return (
     <div>
-      {images.map((image) => (
-        <img src={image} key={image} />
-      ))}
+      {imageItems}
     </div>
   );
 }
